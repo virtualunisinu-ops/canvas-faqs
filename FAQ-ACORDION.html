@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preguntas Frecuentes (FAQ) con Acordeón</title>
+    <!-- Carga de Tailwind CSS para un diseño moderno y responsive -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Configuración de fuente y estilos básicos */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: transparent; /* Fondo transparente para integrarse mejor en Canvas */
+            padding: 0;
+            margin: 0;
+        }
+
+        /* Estilos del botón (pregunta) */
+        .faq-question {
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+            user-select: none; /* Evita selección de texto */
+        }
+
+        /* Estilo para el icono de flecha/plus */
+        .icon {
+            transition: transform 0.3s ease-in-out;
+            font-weight: bold;
+        }
+
+        /* Rotar el icono cuando el acordeón está abierto */
+        .faq-question[aria-expanded="true"] .icon {
+            transform: rotate(45deg); /* Cambia de "+" a "x" o simplemente rotar */
+        }
+
+        /* Estilos de la respuesta (contenido) */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, padding 0.3s ease-in-out;
+        }
+
+        /* Cuando el acordeón está abierto, establece una altura máxima y padding */
+        .faq-answer[aria-hidden="false"] {
+            max-height: 500px; /* Suficiente altura para casi cualquier respuesta. Ajustar si es necesario. */
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Estilos para navegadores específicos para asegurar que el acordeón se ve bien */
+        [x-cloak] { display: none; }
+    </style>
+</head>
+<body class="p-4 sm:p-6">
+
+    <div id="faq-container" class="max-w-4xl mx-auto bg-white shadow-xl rounded-xl p-4 sm:p-8 border border-gray-100">
+
+        <h2 class="text-3xl font-extrabold text-indigo-800 mb-8 text-center">
+            📘 Preguntas Frecuentes del Curso
+        </h2>
+
+        <!-- Ítem del Acordeón 1 -->
+        <div class="mb-4 border-b border-indigo-100 last:border-b-0">
+            <button class="faq-question w-full flex justify-between items-center py-4 px-4 text-left text-lg font-semibold text-gray-700 hover:bg-indigo-50 rounded-lg"
+                    data-target="answer-1" aria-expanded="false" aria-controls="answer-1">
+                ¿Cómo puedo recuperar mi contraseña de CANVAS?
+                <span class="icon text-2xl text-indigo-500 transform transition-transform duration-300">+</span>
+            </button>
+            <div id="answer-1" class="faq-answer px-4 text-gray-600 leading-relaxed" aria-hidden="true">
+                <p>Para actualizar la contraseña, ingresar a Elysa, en olvide contraseña.</p>
+            </div>
+        </div>
+
+        <!-- Ítem del Acordeón 2 -->
+        <div class="mb-4 border-b border-indigo-100 last:border-b-0">
+            <button class="faq-question w-full flex justify-between items-center py-4 px-4 text-left text-lg font-semibold text-gray-700 hover:bg-indigo-50 rounded-lg"
+                    data-target="answer-2" aria-expanded="false" aria-controls="answer-2">
+                ¿Porque no puedo ver mis cursos en CANVAS?
+                <span class="icon text-2xl text-indigo-500 transform transition-transform duration-300">+</span>
+            </button>
+            <div id="answer-2" class="faq-answer px-4 text-gray-600 leading-relaxed" aria-hidden="true">
+                <p>En caso de no aparecer los cursos en el tablero, verificar en cursos, todos los cursos, Si el curso no aparece como publicado el docente publicara el curso cuando corresponda, si el curso aun.</p>
+            </div>
+        </div>
+
+        <!-- Ítem del Acordeón 3 -->
+        <div class="mb-4 border-b border-indigo-100 last:border-b-0">
+            <button class="faq-question w-full flex justify-between items-center py-4 px-4 text-left text-lg font-semibold text-gray-700 hover:bg-indigo-50 rounded-lg"
+                    data-target="answer-3" aria-expanded="false" aria-controls="answer-3">
+                ¿Porque no me aparece la calificacion?
+                <span class="icon text-2xl text-indigo-500 transform transition-transform duration-300">+</span>
+            </button>
+            <div id="answer-3" class="faq-answer px-4 text-gray-600 leading-relaxed" aria-hidden="true">
+                <p>Para la calificación máxima ($\text{A}$), debes:
+                    <ul class="list-disc ml-6 mt-2 space-y-1">
+                        <li>Completar todas las lecturas obligatorias.</li>
+                        <li>Obtener un promedio de 90% o más en las evaluaciones.</li>
+                        <li>Participar activamente en los foros de discusión.</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+
+        <!-- Puedes añadir más preguntas y respuestas siguiendo la estructura anterior -->
+        <!-- Solo copia y pega el bloque <div> con la clase "mb-4 border-b..." y cambia los IDs y data-target -->
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const questions = document.querySelectorAll('.faq-question');
+
+            questions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const targetId = question.getAttribute('data-target');
+                    const answer = document.getElementById(targetId);
+                    const isExpanded = question.getAttribute('aria-expanded') === 'true';
+
+                    // Cierra todas las demás respuestas y resetea los botones
+                    questions.forEach(q => {
+                        const otherTargetId = q.getAttribute('data-target');
+                        const otherAnswer = document.getElementById(otherTargetId);
+
+                        if (q !== question) {
+                            q.setAttribute('aria-expanded', 'false');
+                            otherAnswer.setAttribute('aria-hidden', 'true');
+                        }
+                    });
+
+                    // Abre o cierra la respuesta actual
+                    if (isExpanded) {
+                        // Cierra
+                        question.setAttribute('aria-expanded', 'false');
+                        answer.setAttribute('aria-hidden', 'true');
+                    } else {
+                        // Abre
+                        question.setAttribute('aria-expanded', 'true');
+                        answer.setAttribute('aria-hidden', 'false');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
